@@ -39,9 +39,11 @@ void saveConfig() {
     saveJSONObject(items, configFile);
 }
 
+Group grpConfig;
 void setupGUI() {
     cp5 = new ControlP5(this);
     cp5.setAutoDraw(false);
+    grpConfig = cp5.addGroup("Config");
 
     for (Field field : getClass().getDeclaredFields()) {
         String fieldName = field.getName();
@@ -83,6 +85,7 @@ void setupGUI() {
 
     cp5.addBang("saveConfig")
     // .setWidth(200)
+    .setGroup(grpConfig)
     .linebreak()
     ;
 }
@@ -92,6 +95,7 @@ Toggle addToggle(String name) {
            // .setSize(50, 20)
            .setMode(ControlP5.SWITCH)
            .linebreak()
+           .setGroup(grpConfig)
            ;
 }
 
@@ -100,5 +104,12 @@ Slider addSlider(String name, float minValue, float maxValue) {
            .setRange(minValue, maxValue)
            // .setWidth(200)
            .linebreak()
+           .setGroup(grpConfig)
            ;
+}
+
+controlP5.Button addImageButton(String name, PImage image) {
+    return cp5.addButton(name)
+           .setImages(image, image, image)
+           .updateSize();
 }

@@ -5,12 +5,14 @@ float millis; // The value of millis() at the beginning of draw()
 void setup() {
     size(displayWidth, displayHeight);
     setupGUI();
+    // setupOsc();
+
+    Ani.init(this);
+    Ani.noOverwrite(); 
 
     changeState(new IntroState());
 
     lastMouseMillis = millis();
-
-    // setupOsc();
 }
 
 void draw() {
@@ -29,6 +31,7 @@ void draw() {
 
 void drawGUI() {
     if (SHOW_GUI) {
+        grpConfig.show();
         // textFont(sysFont);
         textAlign(LEFT, BASELINE);
 
@@ -40,9 +43,10 @@ void drawGUI() {
              "=i= Intro\n" +
              "\n" +
              "fps: " + int(frameRate), width - 200, 50);
-
-        cp5.draw();
+    } else {
+        grpConfig.hide();
     }
+    cp5.draw();
 }
 
 void keyReleased() {
@@ -52,6 +56,30 @@ void keyReleased() {
     if (key == 'g') SHOW_GUI = !SHOW_GUI;
 }
 
-void mouseReleased() {
+boolean isMouseDown = false;
+
+PVector mouseStart = new PVector();
+PVector mouseDragged = new PVector();
+
+void mousePressed() {
     lastMouseMillis = millis;
+    isMouseDown = true;
+
+    mouseStart.set(mouseX, mouseY);
+
+    currentState.mousePressed();
+}
+
+void mouseDragged() {
+    lastMouseMillis = millis;
+    mouseDragged.set(mouseX - mouseStart.x, mouseY - mouseStart.y);
+
+    currentState.mouseDragged();
+}
+
+void mouseReleased() {
+    isMouseDown = false;
+    lastMouseMillis = millis;
+    mouseDragged.set(0, 0);
+    currentState.mouseReleased();
 }

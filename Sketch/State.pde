@@ -24,6 +24,15 @@ public class State {
     void draw() {
     }
 
+    void mousePressed() {
+    }
+
+    void mouseDragged() {
+    }
+
+    void mouseReleased() {
+    }
+
     void fadeTo(String varName, float duration, float delay, float targetValue) {
         Ani.to(this, duration, delay, varName, targetValue, Ani.LINEAR);
     }

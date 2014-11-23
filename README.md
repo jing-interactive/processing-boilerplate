@@ -1,4 +1,4 @@
-StateSketchSample
+SketchSample
 =================
 
-Processing sketch sample that utilizes common skills.
+Fork this, make money, not ART.

@@ -24,13 +24,36 @@ void setupOsc() {
     myRemoteLocation = new NetAddress("127.0.0.1", 7000);
 }
 
-void testOsc() {
+private void testOsc() {
     /* in the following different ways of creating osc messages are shown by example */
     OscMessage myMessage = new OscMessage("/test");
 
     myMessage.add(123); /* add an int to the osc message */
 
     /* send the message */
+    oscP5.send(myMessage, myRemoteLocation);
+}
+
+void sendOsc(String name) {
+    OscMessage myMessage = new OscMessage(name);
+    oscP5.send(myMessage, myRemoteLocation);
+}
+
+void sendOsc(String name, String value) {
+    OscMessage myMessage = new OscMessage(name);
+    myMessage.add(value);
+    oscP5.send(myMessage, myRemoteLocation);
+}
+
+void sendOsc(String name, float value) {
+    OscMessage myMessage = new OscMessage(name);
+    myMessage.add(value);
+    oscP5.send(myMessage, myRemoteLocation);
+}
+
+void sendOsc(String name, int value) {
+    OscMessage myMessage = new OscMessage(name);
+    myMessage.add(value);
     oscP5.send(myMessage, myRemoteLocation);
 }
 

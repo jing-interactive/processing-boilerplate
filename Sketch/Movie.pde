@@ -3,7 +3,7 @@ import processing.video.*;
 void stopMovie(Movie movie) {
     if (movie == null) return;
 
-    if (movie.time() > 0.1) {
+    if (movie.time() > 0.0) {
         // movie.stop();
         movie.jump(0);
         movie.pause();
@@ -17,7 +17,7 @@ void drawMovie(Movie movie, float x, float y, float w, float h) {
     if (movie.available()) {
         movie.read();
     }
-    if (movie.time() > 0.05) {
+    if (movie.time() > 0.0) {
         image(movie, x, y, w, h);
     }
 }
