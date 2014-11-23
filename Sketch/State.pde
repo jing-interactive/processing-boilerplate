@@ -65,61 +65,6 @@ public class State {
     void defaultAlpha() {
         tint(255);
     }
-
-    void postDraw() {
-        if (keyPressed) {
-            if (key == '1') {
-                isControlVisible = true;
-            } else if (key == '2') {
-                isControlVisible = false;
-            }
-        }
-        if (false && isControlVisible) {
-            if (cp5 == null) {
-                cp5 = new ControlP5(self);
-                cp5.setAutoDraw(false);
-
-                for (Field field : getClass().getDeclaredFields()) {
-                    for (Annotation annotation : field.getAnnotations()) {
-                        println("name: " + field.getName() + " type: " + field.getType());
-                        if (annotation instanceof Parameter) {
-                            Parameter param = (Parameter) annotation;
-                            println("\tmin: " + param.min());
-                            println("\tmax: " + param.max());
-
-                            // field.setAccessible(true);
-                            // Object value = field.get(this);
-                            // float val = ((Float)value).floatValue();
-
-                            // addGUIValue(field.getName(), val, param.min(), param.max());
-                        }
-                    }
-                }
-            }
-            cp5.draw();
-
-            for (Field field : getClass().getDeclaredFields()) {
-                for (Annotation annotation : field.getAnnotations()) {
-                    if (annotation instanceof Parameter) {
-                        // addGUIValue(field.getName(), param.min(), param.max());
-                    }
-                }
-            }
-        }
-    }
-
-    float sliderY = 10;
-    Slider addGUIValue(String name, float value, float minValue, float maxValue) {
-        return cp5.addSlider(name)
-               .setPosition(10, sliderY += 30)
-               .setRange(minValue, maxValue)
-               .setWidth(200)
-               //          .setForeground(color(0, 0, 0))
-               ;
-    }
-
-    ControlP5 cp5;
-    boolean isControlVisible = false;
 }
 
 State currentState;
@@ -129,7 +74,6 @@ float deltaTimeSec = 0;
 // call me from draw()
 void drawState() {
     currentState.draw();
-    currentState.postDraw();
 
     deltaTimeSec = (millis() - lastFrameMilli) * 0.001;
     lastFrameMilli = millis();

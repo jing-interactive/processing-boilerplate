@@ -1,59 +1,104 @@
-// TODO: data driven
-// Save config per State
+// https://docs.oracle.com/javase/6/docs/api/java/lang/reflect/Field.html
 
 import controlP5.*;
 
 ControlP5 cp5;
 
-float sliderY = 10;
-void addValue(String name, float maxValue) {
-    cp5.addSlider(name)
-    .setPosition(10, sliderY += 30)
-    .setRange(0, maxValue)
-    .setWidth(200)
-    //          .setForeground(color(0, 0, 0))
-    ;
-    ;
-}
+final String configFile = "data/config.json";
+ArrayList<Field> cfgFields = new ArrayList<Field>();
 
 void loadConfig() {
     println("loading config");
-    String[] items = loadStrings("config.txt");
-    if (items.length > 0) {
-        int idx = 0;
 
-        // BODY_COUNT = float(items[idx++]);
-        // MAX_AGE = float(items[idx++]);
-    } else {
+    try {
+        JSONObject items = loadJSONObject(configFile);
+        for (Field field : cfgFields) {
+            JSONObject item = items.getJSONObject(field.getName());
+            String value = item.getString("value");
+            field.set(this, Float.valueOf(value));
+        }
+    } catch (Exception e) {
         saveConfig();
     }
 }
 
 void saveConfig() {
-    String[] items = new String[11];
-    int idx = 0;
+    JSONObject items = new JSONObject();
+    int i = 0;
+    for (Field field : cfgFields) {
+        JSONObject item = new JSONObject();
 
-    // items[idx++] = "" + BODY_COUNT;
-    // items[idx++] = "" + MAX_AGE;
+        try {
+            item.setString("value", field.get(this).toString());
+        } catch (IllegalAccessException e) {
+            println("e: " + e);
+        }
+        items.setJSONObject(field.getName(), item);
+    }
 
-    saveStrings("config.txt", items);
+    saveJSONObject(items, configFile);
 }
 
 void setupGUI() {
     cp5 = new ControlP5(this);
     cp5.setAutoDraw(false);
 
-    // addValue("BODY_COUNT", 500);
-    // addValue("MAX_AGE", 10);
+    for (Field field : getClass().getDeclaredFields()) {
+        String fieldName = field.getName();
+        if (fieldName.startsWith("CFG_")) {
+            println("fieldName: " + fieldName);
+            field.setAccessible(true);
+            cfgFields.add(field);
+        }
+    }
 
-    sliderY += 60;
+    loadConfig();
 
-    cp5.addBang("SAVE")
-    .setPosition(10, sliderY += 60)
-    .setWidth(200)
+    for (Field field : cfgFields) {
+        String fieldName = field.getName();
+        Class<?> type = field.getType();
+        if (type.equals(boolean.class)) {
+            addToggle(fieldName);
+            continue;
+        }
+
+        if (field.getAnnotations().length > 0) {
+            for (Annotation annotation : field.getAnnotations()) {
+                println("name: " + field.getName() + " type: " + field.getType());
+                if (annotation instanceof Parameter) {
+                    Parameter param = (Parameter) annotation;
+                    println("\tmin: " + param.min());
+                    println("\tmax: " + param.max());
+
+                    // field.setAccessible(true);
+                    // Object value = field.get(this);
+                    // float val = ((Float)value).floatValue();
+                    addSlider(fieldName, param.min(), param.max());
+                }
+            }
+        } else {
+            addSlider(fieldName, 0, 100);
+        }
+    }
+
+    cp5.addBang("saveConfig")
+    // .setWidth(200)
+    .linebreak()
     ;
 }
 
-void SAVE() {
-    saveConfig();
+Toggle addToggle(String name) {
+    return cp5.addToggle(name)
+           // .setSize(50, 20)
+           .setMode(ControlP5.SWITCH)
+           .linebreak()
+           ;
+}
+
+Slider addSlider(String name, float minValue, float maxValue) {
+    return cp5.addSlider(name)
+           .setRange(minValue, maxValue)
+           // .setWidth(200)
+           .linebreak()
+           ;
 }

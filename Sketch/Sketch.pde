@@ -1,10 +1,8 @@
-PApplet self;
 
 float lastMouseMillis;
 float millis; // The value of millis() at the beginning of draw()
 
 void setup() {
-    self = this;
     size(displayWidth, displayHeight);
     setupGUI();
 
@@ -21,7 +19,7 @@ void draw() {
 
     drawGUI();
 
-    if (millis - lastMouseMillis > SWITCH_INTRO_MILLIS) {
+    if (millis - lastMouseMillis > CFG_SWITCH_INTRO_SECONDS * 1000) {
         if (!getStateName().equals("IntroState") ) {
             changeState(new IntroState());
         }
@@ -30,7 +28,7 @@ void draw() {
 }
 
 void drawGUI() {
-    if (showGUI) {
+    if (SHOW_GUI) {
         // textFont(sysFont);
         textAlign(LEFT, BASELINE);
 
@@ -51,7 +49,7 @@ void keyReleased() {
     if (key == 'm') changeState(new MenuState());
     else if (key == 'i') changeState(new IntroState());
 
-    if (key == 'g') showGUI = !showGUI;
+    if (key == 'g') SHOW_GUI = !SHOW_GUI;
 }
 
 void mouseReleased() {
