@@ -33,6 +33,10 @@ public class State {
     void mouseReleased() {
     }
 
+    void oscEvent(OscMessage msg) {
+
+    }
+
     void fadeTo(String varName, float duration, float delay, float targetValue) {
         Ani.to(this, duration, delay, varName, targetValue, Ani.LINEAR);
     }

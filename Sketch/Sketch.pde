@@ -3,7 +3,7 @@ float lastMouseMillis;
 float millis; // The value of millis() at the beginning of draw()
 
 void setup() {
-    size(displayWidth, displayHeight);
+    size(displayWidth, displayHeight, P2D);
     setupGUI();
     // setupOsc();
 
