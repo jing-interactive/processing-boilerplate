@@ -6,6 +6,7 @@ void setup() {
     size(displayWidth, displayHeight, P2D);
     setupGUI();
     // setupOsc();
+    // setupTuio();
 
     Ani.init(this);
     Ani.noOverwrite(); 

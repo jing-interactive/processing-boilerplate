@@ -63,7 +63,8 @@ void oscEvent(OscMessage msg) {
     print("### received an osc message.");
     print(" addrpattern: " + msg.addrPattern());
     println(" typetag: " + msg.typetag());
-
+    println(" from " + msg.address());
+    
     if (msg.checkAddrPattern("/state")) {
         State newState = null;
         String state = msg.get(0).stringValue();
