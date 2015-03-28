@@ -1,3 +1,6 @@
+// Movie.pde is disabled by default
+// Rename Movie.pde_ to Movie.pde to enable it
+
 import processing.video.*;
 
 void stopMovie(Movie movie) {

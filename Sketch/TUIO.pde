@@ -3,8 +3,10 @@ import TUIO.*;
 TuioProcessing tuioClient;
 
 void setupTuio() {
-	tuioClient  = new TuioProcessing(this);
+	tuioClient  = new TuioProcessing(this, TUIO_LOCAL_PORT);
 }
+
+final int FAKE_BLOB_ID = 9999;
 
 void addTuioCursor(TuioCursor tcur) {
 	println("add cur " + tcur.getCursorID() + " (" + tcur.getSessionID() + ") " + tcur.getX() + " " + tcur.getY());

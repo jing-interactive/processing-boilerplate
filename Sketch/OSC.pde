@@ -11,17 +11,9 @@ OscP5 oscP5;
 NetAddress myRemoteLocation;
 
 void setupOsc() {
-    /* start oscP5, listening for incoming messages at port 12000 */
-    oscP5 = new OscP5(this, 7000);
+    oscP5 = new OscP5(this, OSC_LOCAL_PORT);
 
-    /* myRemoteLocation is a NetAddress. a NetAddress takes 2 parameters,
-     * an ip address and a port number. myRemoteLocation is used as parameter in
-     * oscP5.send() when sending osc packets to another computer, device,
-     * application. usage see below. for testing purposes the listening port
-     * and the port of the remote location address are the same, hence you will
-     * send messages back to this sketch.
-     */
-    myRemoteLocation = new NetAddress("127.0.0.1", 8000);
+    myRemoteLocation = new NetAddress("127.0.0.1", OSC_REMOTE_PORT);
 }
 
 private void testOsc() {
