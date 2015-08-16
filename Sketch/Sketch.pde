@@ -20,14 +20,14 @@ void draw() {
     millis = millis();
     background(122);
 
-    drawGUI();
-
     if (millis - lastMouseMillis > CFG_SWITCH_INTRO_SECONDS * 1000) {
         if (!getStateName().equals("IntroState") ) {
             changeState(new IntroState());
         }
     }
     drawState();
+
+    drawGUI();
 }
 
 void drawGUI() {
