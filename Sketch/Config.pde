@@ -1,6 +1,12 @@
 @Parameter(min = 3, max = 10)
 float CFG_SWITCH_INTRO_SECONDS = 5;
-float CFG_TEST_VALUE = 5;
+boolean CFG_Player_Only = false;
+
+float kCamWidth = 1920;
+float kCamHeight = 1080;
+
+// TODO
+float x1,y1,x2,y2;
 
 boolean SHOW_GUI = true;
 
