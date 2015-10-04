@@ -7,6 +7,7 @@ void setup() {
     setupGUI();
     // setupOsc();
     // setupTuio();
+    setupAudio();
 
     Ani.init(this);
     Ani.noOverwrite(); 
