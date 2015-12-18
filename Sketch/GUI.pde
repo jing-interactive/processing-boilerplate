@@ -1,6 +1,8 @@
 // https://docs.oracle.com/javase/6/docs/api/java/lang/reflect/Field.html
 
 import controlP5.*;
+import java.lang.reflect.Field;
+import java.lang.annotation.Annotation;
 
 ControlP5 cp5;
 

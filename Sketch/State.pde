@@ -1,5 +1,3 @@
-import java.lang.reflect.Field;
-import java.lang.annotation.Annotation;
 import controlP5.*;
 
 void fillScreen(color clr) {
